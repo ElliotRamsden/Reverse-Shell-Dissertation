@@ -1,0 +1,77 @@
+# Reverse Shell Language Configuration File
+# If there are any issues, delete this file, and it will regenerate the default language file.
+
+# Configuration for all messages such as seperator character and seperator size
+MessageConfig:
+  SeperatorCount: 65
+  ClientsPerListPage: 10
+  SeperatorCharacter: "="
+
+Messages:
+# These are displayed at the top of the content, usually between separators
+  Headers:
+    Artefact-Information: |-
+      Artefact Created by Elliot. R
+      Student ID: 20016796
+      Staffordshire University Cyber Security Final Year Project
+    Reverse-Shell-Select-Title: "Reverse Shell: Connect To Already Established Client"
+    Reverse-Shell-Client-Connected-Header: "Reverse Shell: Connected to {HOSTNAME} | Client ID - {CLIENT_ID}"
+    Reverse-Shell-Client-Connected-SubHeader: "Type quit to exit the shell and return to the menu."
+    Reverse-Shell-Waiting-For-New-Connection-Header: "Reverse Shell: Currently waiting for the next client to join..."
+    Help-Page-Header: "Reverse Shell | Help Page"
+    Client-List-Header: |-
+      Current Connections: {CURRENT_CONNECTIONS} ({VIEW_PAGE_AMOUNT} are displayed per page)
+      {SEPERATOR}
+
+      Client ID: Client Name | Client Socket - Date Joined @ Time Joined
+# This displays the options that the user has
+  Main-Menu: |-
+    Please select an option from the list below:
+    1. Connect to specific connection
+    2. Connect to next new connection
+    3. View current connections
+    4. View help menu
+    5. Exit Program (Will terminate all connections)
+# More detailed help can be found in the ReadME.md
+  Help-Page: |-
+    This program can be controlled using the first 5 numbers of the keyboard,
+    as well as also being able to be controlled by 5 keywords.
+    {[1] or [select]} will allow you to enter a client id of a currently 
+    connected client and then start a reverse shell with it.
+    [2] will wait for the next new connection and start a reverse shell
+    with it shell with the client once it connects.
+    {[3] or [list]} will display the currently connected clients in a list
+    displaying {VIEW_PAGE_AMOUNT} connections per page, this can be navigated.
+    {[4] or [help]} will display this help message.
+    {[5] or [exit] or [shutdown]} will terminate the program, this can also be 
+    achieved using Ctrl C from anywhere within the program.
+    For a more detailed walkthrough of this program you should read the ReadMe.md file.
+# Displayed at the bottom of the content between separators
+  Footers:
+    Total-Pages: "Page: {PAGE_NUMBER} / {MAXIMUM_PAGE}"
+# These notify you when there is an issue but not one that would stop the program working
+  Warnings:
+    Maximum-Page: "WARNING: You have already reached the maximum page."
+    Minimum-Page: "WARNING: You have already reached the minimum page."
+    Invalid-Choice: "WARNING: That was not a valid choice, please try again."
+    Multiple-Invalid-Choices: "WARNING: You have entered an incorrect choice 3 times, returning to menu."
+    Invalid-Client: "WARNING: That was not a valid Client ID, please try again."
+# These issues may stop the program working and thus are more serious, they can be viewed in the error logs
+  Errors:
+    Client-Connection-Error: "ERROR: An error occurred whilst accepting a connection."
+    Command-Send-Error: "ERROR: That command could not be sent to the target connection."
+    Server-Binding-Error: "ERROR: The server was unable to be bound to the socket."
+    Server-Shutdown-Error: "ERROR: The server was unable to be shutdown, try killing the server."
+    No-Language-File-Error: "ERROR: Language file was not present, it has been regenerated."
+# These are not errors but just inform the user os what is going on
+  Notifications:
+    Shutdown-Cancellation: "NOTIFICATION: Program termination has been cancelled."
+    Stopped-Waiting-For-New-Client: "NOTIFICATION: Waiting for new client has been cancelled."
+    Client-Disconnected: "NOTIFICATION: Client disconnected during the reverse shell."
+# Displayed when the program is shut down
+  Shutdown:
+    Termination-Notice: "TERMINATED: Program has been terminated, goodbye."
+    Termination-Confirmation: "WARNING: Are you sure you want to exit the program? All connections will need to be re-established."
+# Displayed at the start of the program to let the user know the server socket
+  Listening-For-Connections-Message: "Listening for connections on {HOST_ADDRESS}:{HOST_PORT}..."
+

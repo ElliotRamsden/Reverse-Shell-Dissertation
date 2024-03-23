@@ -1,0 +1,6 @@
+# Reverse Shell Configuration File
+# If there are any issues, delete this file, and it will regenerate the default config file.
+Config:
+  ServerAddress: "192.168.7.5"
+  ServerPort: 9999
+  MaximumConnections: 100
