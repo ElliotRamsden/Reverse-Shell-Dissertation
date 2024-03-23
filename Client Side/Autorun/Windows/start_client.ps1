@@ -1,8 +1,21 @@
-$scriptPath = "C:/Artefact/Client/main.py"
-$processName = "python"
+$pythonScriptPath = "C:\Artefact\Client\main.py"
+$pythonExePath = "python"
 
-$running = Get-Process $processName -ErrorAction SilentlyContinue | Where-Object { $_.Path -eq $scriptPath }
+function ScriptIsRunning {
+    $processes = Get-WmiObject Win32_Process -Filter "Name = 'python.exe'"
+    $scriptRunning = $false
+    foreach ($process in $processes) {
+        if ($process.CommandLine -like "*$pythonScriptPath*") {
+            $scriptRunning = $true
+            break
+        }
+    }
+    return $scriptRunning
+}
 
-if (-not $running) {
-    Start-Process pythonw.exe -ArgumentList $scriptPath -WindowStyle Hidden
+while ($true) {
+    if (-not (ScriptIsRunning)) {
+        Start-Process $pythonExePath $pythonScriptPath -WindowStyle Hidden
+    }
+    Start-Sleep -Seconds 15
 }
