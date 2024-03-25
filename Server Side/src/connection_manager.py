@@ -11,6 +11,8 @@
 
 # Import necessary classes from other files
 
+import select
+import socket
 import threading
 import time
 from src.client_handler import ClientHandler
@@ -62,7 +64,7 @@ class ConnectionManager:
         while True:
             time.sleep(1)
             for client_id, client in list(self.clients.items()):
-                if self.is_client_connected(client) is False:
+                if not client.send_ping_and_wait_for_pong():
                     self.close_single_connection(client_id)
                     del self.clients[client_id]
 

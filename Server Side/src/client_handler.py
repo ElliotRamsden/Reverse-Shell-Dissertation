@@ -11,6 +11,7 @@
 
 # Import necessary classes from other files
 
+import select
 import struct
 from src.messages import Messages
 
@@ -55,3 +56,25 @@ class ClientHandler:
                 return None
             received_data += received_packet
         return received_data
+
+    # Sends a ping message to the client and waits for a response, this is used to check if a client has disconnected
+    # in a manner such as network failure, this needs to be done as it won't be picked up in the is_client_connected
+    # method in connection_manager.
+
+    def send_ping_and_wait_for_pong(self):
+        try:
+            # Need to change this message so that random IDs can be exchanged.
+            self.connection.sendall("thismessageneedstobechanged".encode())
+            readable_client_socket = select.select([self.connection], [], [], 5)
+            if readable_client_socket[0]:
+                client_response = self.connection.recv(1024).decode()
+                if client_response == "pong":
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        except Exception as error:
+            self.logging.add_error_to_log(f"A ping could not be sent to the client: {error}")
+
+
