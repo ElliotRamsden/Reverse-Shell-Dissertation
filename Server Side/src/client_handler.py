@@ -64,7 +64,7 @@ class ClientHandler:
     def send_ping_and_wait_for_pong(self):
         try:
             # Need to change this message so that random IDs can be exchanged.
-            self.connection.sendall("thismessageneedstobechanged".encode())
+            self.connection.sendall("ping".encode())
             readable_client_socket = select.select([self.connection], [], [], 5)
             if readable_client_socket[0]:
                 client_response = self.connection.recv(1024).decode()

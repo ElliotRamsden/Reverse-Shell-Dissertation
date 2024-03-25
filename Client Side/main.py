@@ -67,7 +67,7 @@ class Client:
                 if not received_server_data:
                     break
                 # Need to add a random ID to each message so server can handle it
-                if received_server_data.decode("utf-8") == "thismessageneedstobechanged":
+                if received_server_data.decode("utf-8") == "ping":
                     self.client_socket.send("pong".encode("utf-8"))
                 else:
                     if received_server_data[:2].decode("utf-8") == 'cd':
