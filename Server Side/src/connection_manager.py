@@ -28,6 +28,7 @@ class ConnectionManager:
     def __init__(self, logging):
         self.clients = {}
         self.view_page_amount = 10
+        self.next_client_id = 1
         self.messages = Messages()
         self.logging = logging
         self.new_connection_event = threading.Event()
@@ -45,10 +46,9 @@ class ConnectionManager:
                 connection, address = server_socket.accept()
                 connection.setblocking(True)
                 client_hostname = connection.recv(1024).decode("utf-8")
-                current_client_amount = self.get_total_clients_connected()
+                new_client_id = self.get_next_client_id()
                 new_client = ClientHandler(connection, address[0], address[1], client_hostname,
-                                           (current_client_amount + 1 if current_client_amount > 0 else 1),
-                                           dt.now(), self.logging)
+                                   new_client_id, dt.now(), self.logging)
                 self.clients[new_client.client_id] = new_client
                 self.new_connection_event.set()
                 #  print(f"\nA new connection has been established: {address[2]} @ ({address[0]}:{address[1]})")
@@ -131,8 +131,15 @@ class ConnectionManager:
             return self.clients[last_key]
         else:
             return None
+        
+    # Gets the id of the next client, using length of list as client id can lead to errors.
 
-    # Returns the length of the clients dictionary and thus how many clients are connected
+    def get_next_client_id(self):
+        current_id = self.next_client_id
+        self.next_client_id += 1
+        return current_id
+
+    # Returns the length of the clients dictionary and thus how many clients are connected.
 
     def get_total_clients_connected(self):
         return len(self.clients)
