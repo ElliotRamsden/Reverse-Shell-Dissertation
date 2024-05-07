@@ -14,7 +14,7 @@ import platform
 
 class Client:
     def __init__(self):
-        self.server_host = "192.168.7.3"
+        self.server_host = "192.168.7.8"
         self.server_port = 9999
         self.client_socket = None
 
